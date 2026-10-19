@@ -1,0 +1,8 @@
+/build/
+/build-ttl8/
+/cmake-build-*/
+*.bin
+*.hex
+*.lst
+*.rom
+__pycache__/

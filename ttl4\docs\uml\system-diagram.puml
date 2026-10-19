@@ -1,0 +1,18 @@
+@startuml TTL4_System
+left to right direction
+rectangle "Assembly source\n.asm" as asm
+component "TTL4 assembler" as assembler
+artifact "Opcode bytes\n.bin / .hex" as object
+component "CPU4 emulator" as cpu
+database "Program ROM\n256 x 8-bit" as rom
+database "Data RAM\n256 x 4-bit" as ram
+component "Output latch" as out
+artifact "Hardware definition\n(JSON)" as definition
+component "Microcode generator" as generator
+artifact "EEPROM image" as image
+asm --> assembler --> object --> cpu
+cpu --> rom
+cpu --> ram
+cpu --> out
+definition --> generator --> image
+@enduml

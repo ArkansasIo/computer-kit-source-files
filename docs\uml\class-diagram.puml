@@ -1,0 +1,40 @@
+@startuml TTL8_Class_Diagram
+skinparam classAttributeIconSize 0
+class CPU {
+  - A, B, IR, MAR : Register8
+  - PC : uint8_t
+  - carry, zero, halted : bool
+  - bus : Bus
+  - alu : ALU
+  - memory : Memory
+  - input : InputPort
+  - outputPort : OutputPort
+  + reset()
+  + loadProgram(bytes, address)
+  + step()
+  + run(maxSteps)
+}
+class Register8 { +load(value) +clear() +read() }
+class Bus { +write(data) +read() }
+class ALU { +add(a,b) +subtract(a,b) +bitAnd(a,b) +bitOr(a,b) +bitXor(a,b) +bitNot(a) }
+class Memory { +read(address) +write(address,value) +clear() }
+class InputPort { +write(value) +read() +available() }
+class OutputPort { +write(value) +value() +history() }
+class ControlUnit { +decode(opcode) }
+class ControlStore { +load(bytes,wordBytes,stepBits) +read(opcode,step) }
+class ProgramCounter { +load(value) +increment() +read() }
+class Flags { +carry : bool +zero : bool +updateZero(value) }
+class Clock { +tick() +high() +edgeCount() }
+CPU *-- Register8
+CPU *-- Bus
+CPU *-- ALU
+CPU *-- Memory
+CPU *-- InputPort
+CPU *-- OutputPort
+note right of CPU : Current CPU uses primitive PC and flag fields.
+ProgramCounter ..> CPU : reusable component
+Flags ..> CPU : reusable component
+Clock ..> CPU : not yet cycle-integrated
+ControlUnit ..> CPU : opcode decode model
+ControlStore ..> CPU : separate ROM image model
+@enduml

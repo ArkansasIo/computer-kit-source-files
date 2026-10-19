@@ -1,0 +1,32 @@
+@startuml TTL4_Class_Diagram
+class CPU4 {
+  - A, B : Register4
+  - IR, MAR : ByteRegister
+  - PC : uint8_t
+  - carry, zero, halted : bool
+  - alu : ALU4
+  - memory : Memory4
+  - input : InputPort4
+  - outputPort : OutputPort4
+  + reset()
+  + loadProgram(bytes, address)
+  + step()
+  + run(limit)
+}
+class Register4 { +load(nibble) +read() }
+class ByteRegister { +load(byte) +read() }
+class Bus4 { +write(nibble) +read() }
+class ALU4 { +add(a,b) +subtract(a,b) +bitAnd(a,b) +bitOr(a,b) +bitXor(a,b) +bitNot(a) }
+class Memory4 { +read(address) +write(address,nibble) }
+class InputPort4 { +write(nibble) +read() +available() }
+class OutputPort4 { +write(nibble) +value() +history() }
+class ControlUnit4 { +validOpcode(opcode) }
+CPU4 *-- Register4
+CPU4 *-- ByteRegister
+CPU4 *-- Bus4
+CPU4 *-- ALU4
+CPU4 *-- Memory4
+CPU4 *-- InputPort4
+CPU4 *-- OutputPort4
+CPU4 ..> ControlUnit4
+@enduml

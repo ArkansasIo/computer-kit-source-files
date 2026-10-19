@@ -1,0 +1,23 @@
+@startuml TTL8_System
+left to right direction
+rectangle "Assembly source\n.asm" as asm
+component "Lexer" as lexer
+component "Parser" as parser
+component "Symbol table" as symbols
+component "Assembler" as assembler
+artifact "Machine code\n.bin / .hex / .lst" as obj
+component "TTL8 emulator\nCPU reference model" as emulator
+database "256-byte memory" as ram
+component "Output port" as output
+artifact "Control definition\n(JSON signal map)" as definition
+component "Microcode generator" as generator
+artifact "EEPROM image\n(.rom / .hex)" as rom
+asm --> lexer --> parser --> symbols --> assembler --> obj
+note bottom of lexer : Intended pipeline view.
+note bottom of assembler : Current CLI uses line-based parser in Assembler.cpp.
+obj --> emulator
+emulator --> ram
+emulator --> output
+definition --> generator --> rom
+rom ..> "Physical TTL control EEPROM" : programmed into
+@enduml
