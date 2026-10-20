@@ -29,6 +29,9 @@ jobs:
       - name: Build TTL8
         run: cmake --build build-ttl8 --config Release --parallel
 
+      - name: Run TTL8 regression tests
+        run: ctest --test-dir build-ttl8 -C Release --output-on-failure
+
       - name: Configure TTL4
         run: cmake -S ttl4 -B build-ttl4 -DCMAKE_BUILD_TYPE=Release
 
