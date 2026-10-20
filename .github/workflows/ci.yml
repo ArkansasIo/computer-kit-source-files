@@ -33,9 +33,6 @@ jobs:
         run: cmake -S ttl4 -B build-ttl4 -DCMAKE_BUILD_TYPE=Release
 
       - name: Build TTL4
-        run: cmake -S ttl4 -B build-ttl4 -DCMAKE_BUILD_TYPE=Release
-
-      - name: Build TTL4
         run: cmake --build build-ttl4 --config Release --parallel
 
       - name: Verify sample programs (Linux/macOS)
