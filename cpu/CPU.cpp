@@ -1,3 +1,4 @@
+#include <string>
 #include "CPU.hpp"
 void CPU::reset(){A.clear();B.clear();IR.clear();MAR.clear();PC=0;carry=zero=halted=false;memory.clear();input.clear();outputPort.clear();}
 void CPU::queueInput(uint8_t value){input.write(value);}
