@@ -16,17 +16,9 @@ template<class F> void throws(F fn, const std::string& message) {
   catch (const std::exception&) { check(true, message); }
 }
 void assemblerExecution() {
-    "LDI 3\\n"
-    "LDI 5\\n"
-    "STA ADDEND\\n"
-    "LDA VALUE\\n"
-    "ADD ADDEND\\n"
-    "OUT\\n"
-    "HLT\\n"
-    "VALUE: .BYTE 0\\n"
-    "ADDEND: .BYTE 0");
+  Assembler assembler;
   auto object = assembler.assemble(
-    "LDI 3\nSTA VALUE\nLDI 5\nSTA ADDEND\nLDA VALUE\nADD ADDEND\nOUT\nHLT\nVALUE: .BYTE 0\nADDEND: .BYTE 0\n");
+    "LDI 3\\nSTA VALUE\\nLDI 5\\nSTA ADDEND\\nLDA VALUE\\nADD ADDEND\\nOUT\\nHLT\\nVALUE: .BYTE 0\\nADDEND: .BYTE 0\\n");
   CPU cpu; cpu.loadProgram(object.bytes()); cpu.run();
   check(cpu.outputsWritten().size() == 1 && cpu.outputsWritten()[0] == 8, "assembler and CPU compute 3 + 5");
   check(cpu.isHalted(), "HLT marks CPU halted");
